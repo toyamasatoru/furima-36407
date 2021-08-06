@@ -2,36 +2,36 @@
 
 ##users テーブル
 
-| Column             | Type   | Options     |
-| ------------------ | ------ | ----------- |
-| nickname           | string | null: false |
-| email              | string | null: false |
-| encrypted_password | string | null: false |
-| family_name        | string | null: false |
-| first_name         | string | null: false |
-| family_name_kana   | string | null: false |
-| first_name_kana    | string | null: false |
-| birthday           | date   | null: false |
+| Column             | Type   | Options                  |
+| ------------------ | ------ | -----------              |
+| nickname           | string | null: false              |
+| email              | string | null: false unique: true |
+| encrypted_password | string | null: false              |
+| family_name        | string | null: false              |
+| first_name         | string | null: false              |
+| family_name_kana   | string | null: false              |
+| first_name_kana    | string | null: false              |
+| birthday           | date   | null: false              |
 
 ### Association
 
 - has_many :purchases
 - has_many :items
-- has_one :card
 - has_many :comments
 
 ##items テーブル
 
-| Column             | Type       | Options     |
-| ------------------ | ---------- | ----------- |
-| name               | string     | null: false |
-| information        | text       | null: false |
-| category           | integer    | null: false |
-| status             | integer    | null: false |
-| postage            | integer    | null: false |
-| delivery_area      | integer    | null: false |
-| price              | integer    | null: false |
-| user               | references |             |
+| Column                | Type       | Options     |
+| --------------------- | ---------- | ----------- |
+| name                  | string     | null: false |
+| information           | text       | null: false |
+| category_id           | integer    | null: false |
+| status_id             | integer    | null: false |
+| postage_id            | integer    | null: false |
+| delivery_area_id      | integer    | null: false |
+| delivery_schedule_id  | integer    | null: false |
+| price                 | integer    | null: false |
+| user                  | references |             |
 
 ### Association
 
@@ -67,19 +67,6 @@
 - belongs_to :user
 - belongs_to :item
 - has_one :delivery
-
-##cards テーブル
-
-| Column             | Type       | Options     |
-| ------------------ | ---------- | ----------- |
-| card_id            | string     | null: false |
-| card_deadline      | string     | null: false |
-| card_security      | string     | null: false |
-| user               | references |             |
-
-### Association
-
-- belongs_to :user
 
 ##comments テーブル
 
