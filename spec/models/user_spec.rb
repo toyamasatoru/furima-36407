@@ -17,6 +17,11 @@ RSpec.describe User, type: :model do
         @user.valid?
         expect(@user.errors.full_messages).to include("Email can't be blank")
       end
+      it 'emailは@がないと登録できない' do
+        @user.email = 'hogefuga.com'
+        @user.valid?
+        expect(@user.errors.full_messages).to include("Email is invalid")
+      end
       it 'emailが重複すると登録できない' do
         @user.save
         another_user = FactoryBot.build(:user)
@@ -37,6 +42,16 @@ RSpec.describe User, type: :model do
       end
       it 'passwordが半角英数字混合でなければ登録できない' do
         @user.password = 'aaaaaa'
+        @user.valid?
+        expect(@user.errors.full_messages).to include("Password confirmation doesn't match Password")
+      end
+      it 'passwordが半角数字のみでは登録できない' do
+        @user.password = '111111'
+        @user.valid?
+        expect(@user.errors.full_messages).to include("Password confirmation doesn't match Password")
+      end
+      it 'passwordが全角では登録できない' do
+        @user.password = 'AAAAAA'
         @user.valid?
         expect(@user.errors.full_messages).to include("Password confirmation doesn't match Password")
       end
@@ -69,6 +84,16 @@ RSpec.describe User, type: :model do
         @user.first_name = 'aaaaaa'
         @user.valid?
         expect(@user.errors.full_messages).to include("First name is invalid")
+      end
+      it 'famliy_name_kanaが空だと登録できない' do
+        @user.family_name_kana = ''
+        @user.valid?
+        expect(@user.errors.full_messages).to include("Family name kana can't be blank")
+      end
+      it 'first_name_kanaが空だと登録できない' do
+        @user.first_name_kana = ''
+        @user.valid?
+        expect(@user.errors.full_messages).to include("First name kana can't be blank")
       end
       it 'famiiy_name_kanaが全角（カタカナ）でなければ登録できない' do
         @user.family_name = 'aaaaaa'
