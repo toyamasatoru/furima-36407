@@ -32,6 +32,11 @@ RSpec.describe Item, type: :model do
         @item.valid?
         expect(@item.errors.full_messages).to include("Status must be other than 1")
       end
+      it 'postage_idが空では出品できない' do
+        @item.postage_id = 1
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Postage must be other than 1")
+      end
       it 'delivery_area_idが空では出品できない' do
         @item.delivery_area_id = 1
         @item.valid?
@@ -52,6 +57,16 @@ RSpec.describe Item, type: :model do
         @item.valid?
         expect(@item.errors.full_messages).to include("Price is not a number")
       end
+      it 'priceが半角英数字混合では出品できない' do
+        @item.price = '1a11'
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Price is not a number")
+      end
+      it 'priceが半角英字混合では出品できない' do
+        @item.price = 'aaaaa'
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Price is not a number")
+      end
       it 'priceが299以下は出品できない' do
         @item.price = 299
         @item.valid?
@@ -61,6 +76,12 @@ RSpec.describe Item, type: :model do
         @item.price = 100000001
         @item.valid?
         expect(@item.errors.full_messages).to include("Price must be less than or equal to 9999999")
+      end
+    end
+
+    context '出品ができるとき' do
+      it "必須項目が全てあれば登録できること" do
+        expect(@item).to be_valid
       end
     end
   end
