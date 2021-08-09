@@ -1,13 +1,10 @@
 class Item < ApplicationRecord
-  validates :name, presence: true
-  validates :information, presence: true
-  validates :category_id, presence: true
-  validates :status_id, presence: true
-  validates :postage_id, presence: true
-  validates :delivery_area_id, presence: true
-  validates :delivery_schedule_id, presence: true
-  validates :price, presence: true, numericality: { greater_than_or_equal_to: 300, less_than_or_equal_to: 9_999_999 }, format: { with: /\A[0-9]+\z/ }
-  validates :image, presence: true
+  with_options presence: true do
+    validates :name
+    validates :information
+    validates :price, numericality: { greater_than_or_equal_to: 300, less_than_or_equal_to: 9_999_999 }, format: { with: /\A[0-9]+\z/ }
+    validates :image
+  end
   
   belongs_to :user
   has_one_attached :image
@@ -29,7 +26,7 @@ class Item < ApplicationRecord
   # validates :delivery_area_id, numericality: { other_than: 1 }
 
   # 上記コメントアウトは、LGTM確認後に削除します。
-  with_options  numericality: { other_than: 1 } do
+  with_options numericality: { other_than: 1 } do
     validates :delivery_schedule_id
     validates :category_id
     validates :status_id
