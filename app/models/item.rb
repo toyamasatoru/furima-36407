@@ -11,21 +11,11 @@ class Item < ApplicationRecord
   
   extend ActiveHash::Associations::ActiveRecordExtensions
   belongs_to :delivery_schedule
-  # validates :delivery_schedule_id, numericality: { other_than: 1 }
-
   belongs_to :category
-  # validates :category_id, numericality: { other_than: 1 }
-
   belongs_to :status
-  # validates :status_id, numericality: { other_than: 1 }
-
   belongs_to :postage
-  # validates :postage_id, numericality: { other_than: 1 }
-
   belongs_to :delivery_area
-  # validates :delivery_area_id, numericality: { other_than: 1 }
 
-  # 上記コメントアウトは、LGTM確認後に削除します。
   with_options numericality: { other_than: 1 } do
     validates :delivery_schedule_id
     validates :category_id
