@@ -1,9 +1,8 @@
 class ItemsController < ApplicationController
   before_action :authenticate_user!, only: [:new, :create, :edit, :update]
-  before_action :set_item, only: [:create, :show, :edit, :update]
+  before_action :set_item, only: [ :show, :edit, :update]
   before_action :move_to_index, only: [:edit, :update]
 
-# 以下コメントアウトは、安心要素としてLGTM確認後に削除します。
   def index
     @items = Item.all.order("created_at DESC")
   end
@@ -13,7 +12,7 @@ class ItemsController < ApplicationController
   end
 
   def create
-    # @item = Item.new(item_params)
+    @item = Item.new(item_params)
     if @item.save
       redirect_to root_path
     else
@@ -22,24 +21,23 @@ class ItemsController < ApplicationController
   end
 
   def show
-    # @item = Item.find(params[:id])
   end
 
   def edit
-    # @item = Item.find(params[:id])
-    # unless @item.user_id == current_user.id
-    #   redirect_to action: :index
-    # end
   end
 
   def update
-    # @item = Item.find(params[:id])
     if @item.update(item_params)
       redirect_to root_path
     else
       render :edit
     end
+  end
 
+  def destroy
+    item = Item.find(params[:id])
+    item.destroy
+    redirect_to root_path
   end
 
 private
