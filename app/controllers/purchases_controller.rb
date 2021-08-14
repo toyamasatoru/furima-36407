@@ -1,7 +1,9 @@
 class PurchasesController < ApplicationController
+  before_action :authenticate_user!, only: [:index, :create]
   before_action :set_purchase, only: [:index, :create]
-  before_action :loggin_check, only: [:index, :create]
+  # before_action :loggin_check, only: [:index, :create]
   before_action :purchase_check, only: [:index, :create]
+
 
   def index
     @purchase_delivery = PurchaseDelivery.new
@@ -27,7 +29,7 @@ class PurchasesController < ApplicationController
   def set_purchase
     @item = Item.find(params[:item_id])
     if @item.purchase.present?
-       redirect_to user_session_path
+       redirect_to root_path
     end
     # LGTM確認後削除します
     # if current_user == @item.user
@@ -41,11 +43,11 @@ class PurchasesController < ApplicationController
     end
   end
 
-  def loggin_check
-    unless current_user
-      redirect_to user_session_path
-    end
-  end
+  # def loggin_check
+  #   unless current_user
+  #     redirect_to user_session_path
+  #   end
+  # end
 
   def pay_item
     Payjp.api_key = ENV["PAYJP_SECRET_KEY"]
