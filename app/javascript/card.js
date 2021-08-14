@@ -1,6 +1,5 @@
 const pay = () => {
   Payjp.setPublicKey(process.env.PAYJP_PUBLIC_KEY);
-  Payjp.setPublicKey("pk_test_dab6cc43d1a4e8f031ff080a");
   const submit = document.getElementById("button");
   submit.addEventListener("click", (e) => {
     e.preventDefault();
