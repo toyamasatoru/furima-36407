@@ -6,9 +6,6 @@ class PurchasesController < ApplicationController
     if current_user == @item.user
       redirect_to root_path
     end
-    unless current_user == @item.user
-      redirect_to root_path
-    end
   end
 
   def create
@@ -30,6 +27,9 @@ class PurchasesController < ApplicationController
 
   def set_purchase
     @item = Item.find(params[:item_id])
+    unless current_user == @item.user
+      redirect_to root_path
+    end
   end
 
   def pay_item
