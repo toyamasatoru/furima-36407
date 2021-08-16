@@ -6,8 +6,6 @@ class User < ApplicationRecord
 
   with_options presence: true do
     validates :nickname
-    validates :email
-    validates :password, format:{ with: /(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]{6,}/}
     validates :birthday
 
     with_options format: { with: /\A[ぁ-んァ-ヶ一-龥々ー]+\z/ } do
@@ -20,4 +18,8 @@ class User < ApplicationRecord
       validates :first_name_kana
      end
   end
+
+     with_options format:{ with: /(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]{6,}/} do
+     validates :password
+     end
 end

@@ -13,7 +13,7 @@ class PurchaseDelivery
   end
 
   extend ActiveHash::Associations::ActiveRecordExtensions
-  validates :delivery_area, numericality: { other_than: 0, message: "can't be blank" }
+  validates :delivery_area, numericality: { other_than: 1, message: "can't be blank" }
 
   def save
     purchase = Purchase.create(user_id: user_id, item_id: item_id)

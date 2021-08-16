@@ -45,7 +45,7 @@ RSpec.describe PurchaseDelivery, type: :model do
         expect(@purchase_delivery.errors.full_messages).to include("Phone is invalid")
       end
       it 'delivery_areaが空では購入できない' do
-        @purchase_delivery.delivery_area = 0
+        @purchase_delivery.delivery_area = 1
         @purchase_delivery.valid?
         expect(@purchase_delivery.errors.full_messages).to include("Delivery area can't be blank")
       end
